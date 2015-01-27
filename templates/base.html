@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>my first Django project</title>
+
+    <style type="text/css">
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>my first Django project</h1>
+    </header>
+    <nav>
+        <ul class="menu">
+            <li class="menu__item">
+                <a href="/admin/catalog/goods/" target="_blank">Админка</a>
+            </li>
+            <li class="menu__item">
+                <a href="/admin/catalog/goods/" target="_blank">Админка записи</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
