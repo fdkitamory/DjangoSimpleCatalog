@@ -1,7 +1,5 @@
-db
 media
 .idea
 *.pyc
 *.jpg
 *.jpeg
-*.db
