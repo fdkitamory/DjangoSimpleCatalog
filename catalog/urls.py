@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import *
-from mycatalog.catalog.views import archive
+from mycatalog.catalog.views import index
 
 urlpatterns = patterns('',
-    url(r'^$', archive),
+    url(r'^$', index),
 )

@@ -3,11 +3,12 @@
 {% block content %}
 
 <ul class="prod_list">
-    {% for product in products %}
+    {% for item in items %}
         <li class="prod_list__item">
-            <h2>{{ product.goods_title }}</h2>
-            <span>{{ product.goods_category }}</span>
-            <p>{{ product.goods_body }}</p>
+            <h2>{{ item.title }}</h2>
+            <span>
+                <img src="/media/{{ item.image }}" alt=""/>
+            </span>
         </li>
     {% endfor %}
 </ul>

@@ -2,13 +2,13 @@
 
 from django.template import loader, Context
 from django.http import HttpResponse
-from mycatalog.catalog.models import ItemCategory, Item
+import mycatalog.catalog.models
 
 
-def archive(request):
-    products = Goods.objects.all()
+def index(request):
+    items = mycatalog.catalog.models.Item.objects.all()
     t = loader.get_template("goods_list.html")
-    c = Context({'products': products})
+    c = Context({'items': items})
     return HttpResponse(t.render(c))
 
 
