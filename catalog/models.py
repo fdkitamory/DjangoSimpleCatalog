@@ -5,7 +5,7 @@ from django.contrib import admin
 
 
 class ItemCategory(models.Model):
-    parent = models.ForeignKey('self', null=True, related_name='child')
+    parent = models.ForeignKey('self', blank=True, null=True, related_name='child')
     name = models.CharField(max_length=50)
     image = models.ImageField(upload_to='img')
 
@@ -35,7 +35,7 @@ class ItemCategoryAdm(admin.ModelAdmin):
 
 
 class ItemAdm(admin.ModelAdmin):
-    list_display = ('title', 'image',)
+    list_display = ('title', 'image')
 
 
 admin.site.register(ItemCategory, ItemCategoryAdm)
