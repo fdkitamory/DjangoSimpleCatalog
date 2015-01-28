@@ -2,7 +2,7 @@
 
 from django.template import loader, Context
 from django.http import HttpResponse
-from mycatalog.catalog.models import Goods
+from mycatalog.catalog.models import ItemCategory, Item
 
 
 def archive(request):

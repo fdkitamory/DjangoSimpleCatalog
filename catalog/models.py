@@ -1,35 +1,42 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+#from django.db.models import permalink
 from django.contrib import admin
 
 
-class GoodsCategories(models.Model):
-    category = models.CharField(max_length=50)
+class ItemCategory(models.Model):
+    parent = models.ForeignKey('self', null=True, related_name='child')
+    name = models.CharField(max_length=50)
+    image = models.ImageField(upload_to='img')
 
     def __unicode__(self):
-        return u'#{0}: {1}'.format(self.pk, self.category)
-
-
-class GoodsCategoriesAdmin(admin.ModelAdmin):
-    list_display = ("pk", "category",)
-
-
-class Goods(models.Model):
-    goods_title = models.CharField(max_length=150)
-    goods_body = models.TextField()
-    goods_category = models.ForeignKey(GoodsCategories)
+        return u'{0}'.format(self.name)
 
     class Meta():
-        ordering = ("goods_title",)
+        ordering = ['name']
+        verbose_name_plural = 'Categories'
 
 
-class GoodsAdmin(admin.ModelAdmin):
-    """ Четкий вывод в админке >_< """
+class Item(models.Model):
+    title = models.CharField(max_length=50)
+    image = models.ImageField(upload_to='img')
+    category = models.ManyToManyField(ItemCategory, blank=True)
 
-    list_display = ("goods_title", "goods_body")
+    class Meta():
+        ordering = ['title']
+
+    # @permalink
+    # def get_absolute_url(self):
+    #     return 'item_detail', None, {'object_id': self.id}
 
 
-# Регистрация моделей в джанго админке
+class ItemCategoryAdm(admin.ModelAdmin):
+    list_display = ('name', 'parent', 'image')
 
-admin.site.register(GoodsCategories, GoodsCategoriesAdmin)
-admin.site.register(Goods, GoodsAdmin)
+
+class ItemAdm(admin.ModelAdmin):
+    list_display = ('title', 'image',)
+
+
+admin.site.register(ItemCategory, ItemCategoryAdm)
+admin.site.register(Item, ItemAdm)
