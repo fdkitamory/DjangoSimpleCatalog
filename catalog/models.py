@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-#from django.db.models import permalink
-from django.contrib import admin
+from django.db.models import signals
+from pytils import translit
 
 
 class ItemCategory(models.Model):
@@ -21,22 +21,23 @@ class Item(models.Model):
     title = models.CharField(max_length=50)
     image = models.ImageField(upload_to='img')
     category = models.ManyToManyField(ItemCategory, blank=True)
+    slug = models.SlugField(blank=True, null=True)
 
     class Meta():
         ordering = ['title']
+
+    def __unicode__(self):
+        return u'#{}: {}'.format(self.pk, self.title)
 
     # @permalink
     # def get_absolute_url(self):
     #     return 'item_detail', None, {'object_id': self.id}
 
+    @staticmethod
+    def pre_save(sender, instance, **kwargs):
+        slug = translit.slugify(u'{}-{}'.format(instance.title, instance.pk))
+        if instance.slug != slug:
+            instance.slug = slug
+            instance.save()
 
-class ItemCategoryAdm(admin.ModelAdmin):
-    list_display = ('name', 'parent', 'image')
-
-
-class ItemAdm(admin.ModelAdmin):
-    list_display = ('title', 'image')
-
-
-admin.site.register(ItemCategory, ItemCategoryAdm)
-admin.site.register(Item, ItemAdm)
+signals.pre_save.connect(Item.pre_save, sender=Item)
