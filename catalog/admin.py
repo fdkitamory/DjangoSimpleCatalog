@@ -5,7 +5,7 @@ from django.contrib import admin
 
 
 class ItemCategoryAdm(admin.ModelAdmin):
-    list_display = ('name', 'parent', 'image')
+    list_display = ('name', 'slug', 'parent', 'image')
 
 
 class ItemAdm(admin.ModelAdmin):
