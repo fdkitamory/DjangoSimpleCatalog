@@ -29,7 +29,7 @@ class ItemCategory(models.Model):
 class Item(models.Model):
     title = models.CharField(max_length=50)
     image = models.ImageField(upload_to='img')
-    category = models.ManyToManyField(ItemCategory, blank=True)
+    category = models.ForeignKey(ItemCategory, null=True)
     slug = models.SlugField(blank=True, null=True, unique=True)
 
     class Meta():

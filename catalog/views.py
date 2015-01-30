@@ -14,18 +14,34 @@ def index(request):
 
 
 def categories(reguest, category_name):
-    categories = ItemCategory.objects.all()
-    indexCategories = []
-    for category in categories:
-        if category.parent is None:
-            indexCategories.append(category)
-            childCategories = []
-            for child in category.child.all():
-                childCategories.append(child)
+    categories = ItemCategory.objects.filter(parent__isnull=True)
+    catThree = []
 
-            indexCategories.append(childCategories)
+    def catThreeBuild(cats):
+        catBranch = {}
+        for cat in cats:
+            catBranch['cat'] = cat
+            catBranch['sub'] = cat.child.all()
 
-    print indexCategories
+            catThreeBuild(catBranch['sub'])
+
+        return catBranch
+
+    for cat in categories:
+        catThree.append(catThreeBuild(categories))
+
+    #Bebug @_@
+    # indexCategories = []
+    # for category in categories:
+    #     if category.parent is None:
+    #         indexCategories.append(category)
+    #         childCategories = []
+    #         for child in category.child.all():
+    #             childCategories.append(child)
+    #
+    #         indexCategories.append(childCategories)
+
+    print catThree
     # items = categories.Item.objects.all()
     tpl = loader.get_template('categories.html')
     c = Context({'categories': categories})
