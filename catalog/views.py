@@ -1,9 +1,10 @@
+# -*- coding: utf-8 -*-
 # Create your views here.
 
 from django.template import loader, Context
 from django.http import HttpResponse
-from django.http import HttpRequest
 from mycatalog.catalog.models import Item, ItemCategory
+
 
 
 def index(request):
@@ -15,20 +16,30 @@ def index(request):
 
 def categories(reguest, category_name):
     categories = ItemCategory.objects.filter(parent__isnull=True)
-    catThree = []
+    cat_three = []
 
-    def catThreeBuild(cats):
-        catBranch = {}
+    def cat_lvl(cat, depth=0):
+        return cat.parent and cat_lvl(cat.parent, depth+1) or depth
+
+        # if cat.parent:
+        #     return cat_lvl(cat.parent, depth+1)
+        # return depth
+
+    def cat_three_build(cats):
+
+        cat_branch = {}
         for cat in cats:
-            catBranch['cat'] = cat
-            catBranch['sub'] = cat.child.all()
+            cat_branch['cat'] = cat
+            cat_branch['lvl'] = cat_lvl(cat)
+            cat_branch['sub'] = cat.child.all()
 
-            catThreeBuild(catBranch['sub'])
+            cat_three_build(cat_branch['sub'])
+            cat_three.append(cat_branch)
 
-        return catBranch
+        return cat_three
 
-    for cat in categories:
-        catThree.append(catThreeBuild(categories))
+
+    # catThree.append()
 
     #Bebug @_@
     # indexCategories = []
@@ -41,7 +52,7 @@ def categories(reguest, category_name):
     #
     #         indexCategories.append(childCategories)
 
-    print catThree
+    print cat_three_build(categories)
     # items = categories.Item.objects.all()
     tpl = loader.get_template('categories.html')
     c = Context({'categories': categories})

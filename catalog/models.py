@@ -6,6 +6,7 @@ from pytils import translit
 from catalog.supprots import stringCodesSum
 from random import randint
 
+
 class ItemCategory(models.Model):
     parent = models.ForeignKey('self', blank=True, null=True, related_name='child')
     name = models.CharField(max_length=50)

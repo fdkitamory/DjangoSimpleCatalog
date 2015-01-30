@@ -1,4 +1,4 @@
-
+# -*- coding: utf-8 -*-
 def stringCodesSum(string):
     number = 0
     for i in string:
