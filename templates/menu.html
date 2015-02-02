@@ -1,5 +1,11 @@
 <h3>Это блиать меню!!!111</h3>
 <ul class="menu">
+    <li class="menu__item">
+        <a href="/admin/">Админка</a>
+        <br />
+        <br />
+    </li>
+
     {% for category in categories %}
         <li class="menu__item">
             <a href="/{{ category.slug }}/">{{ category.name }}</a>

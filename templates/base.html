@@ -4,25 +4,52 @@
     <title>my first Django project</title>
 
     <style type="text/css">
+        body{
+            background: #FFF;
+        }
         .wrapper{
-            width: 1000px;
+            width: 980px;
+            padding: 10px;
             margin: 0 auto;
+            background: #c0c0c0;
         }
         .nav{
             float: left;
             width: 300px;
+            margin: 0 20px 0 0;
+            background: #fff;
         }
         .content{
             overflow: hidden;
         }
-        .prod_list ul li{
-            display: inline-block;
+        .prod_list{
+            margin: 0;
+            padding: 0;
         }
+            .prod_list .prod_list__item{
+                display: inline-block;
+                width: 32%;
+                margin: 0 0 10px;
+                background: #fff;
+                vertical-align: top;
+            }
+
+        .clearfix:after{
+            visibility: hidden;
+            display: block;
+            font-size: 0;
+            content: " ";
+            clear: both;
+            height: 0;
+        }
+        .clearfix{display: inline-block;}
+        * html .clearfix {height: 1%;}
+        .clearfix {display: block;}
 
     </style>
 </head>
 <body>
-    <div class="wrapper">
+    <div class="wrapper clearfix">
         <header>
             <h1>my first Django project</h1>
         </header>

@@ -2,11 +2,12 @@
 
 {% block content %}
 <ul class="prod_list">
-    <li>Список Товаров</li>
     {% for item in items %}
         <li class="prod_list__item">
             <h2>{{ item.title }}</h2>
-            <p>Категория: {{ item.category }}</p>
+            <div class="prod_lis__img">
+                <img src="{{ item.image }}" alt="{{ item.category }}"/>
+            </div>
             <a href="/{{ item.category }}/{{ item.slug }}/">Подробнее >> </a>
         </li>
     {% endfor %}
