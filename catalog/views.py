@@ -4,6 +4,7 @@
 from django.template import loader, Context
 from django.http import HttpResponse
 from mycatalog.catalog.models import Item, ItemCategory
+from mycatalog.catalog.category_utils import cat_lvl, cat_three_build
 
 
 def index(request):
