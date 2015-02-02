@@ -4,26 +4,34 @@
     <title>my first Django project</title>
 
     <style type="text/css">
-
+        .wrapper{
+            width: 1000px;
+            margin: 0 auto;
+        }
+        .nav{
+            float: left;
+            width: 300px;
+        }
+        .content{
+            overflow: hidden;
+        }
+        .prod_list ul li{
+            display: inline-block;
+        }
 
     </style>
 </head>
 <body>
-    <header>
-        <h1>my first Django project</h1>
-    </header>
-    <nav>
-        <ul class="menu">
-            <li class="menu__item">
-                <a href="/admin" target="_blank">Админка</a>
-            </li>
-            <li class="menu__item">
-                <a href="/admin" target="_blank">Админка записи</a>
-            </li>
-        </ul>
-    </nav>
-    <div class="content">
-        {% block content %}{% endblock %}
+    <div class="wrapper">
+        <header>
+            <h1>my first Django project</h1>
+        </header>
+        <nav class="nav">
+            {% include "menu.html" %}
+        </nav>
+        <div class="content">
+            {% block content %}{% endblock %}
+        </div>
     </div>
 </body>
 </html>

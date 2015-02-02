@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<ul class="prod_list">
+    <li>Список Товаров</li>
+    {% for item in items %}
+        <li class="prod_list__item">
+            <h2>{{ item.title }}</h2>
+            <p>Категория: {{ item.category }}</p>
+            <a href="/{{ item.category }}/{{ item.slug }}/">Подробнее >> </a>
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

@@ -1,0 +1,9 @@
+<h3>Это блиать меню!!!111</h3>
+<ul class="menu">
+    {% for category in categories %}
+        <li class="menu__item">
+            <a href="/{{ category.slug }}/">{{ category.name }}</a>
+        </li>
+    {% endfor %}
+</ul>
+
