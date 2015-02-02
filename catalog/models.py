@@ -24,7 +24,7 @@ class ItemCategory(models.Model):
     def pre_save(sender, instance, **kwargs):
         slug = slugify(translit.translify(u'{}'.format(instance.name)))
 
-        if ItemCategory.objects.filter(slug=slug) is not None:
+        if ItemCategory.objects.filter(slug=slug) is not None and instance.slug is None:
             slug = u'{}_{}'.format(slug, stringCodesSum(u'{}{}'.format(slug, randint(1, 10000))))
 
             if instance.slug != slug:
