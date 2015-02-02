@@ -7,11 +7,9 @@
     </li>
      {{ lvl }}
     {% for cat in categories %}
-       {% for key in cat %}
-            <li class="menu__item{% if cat.lvl > 0 %} sub{% endif %}">
-                <a href="/{{ cat.slug }}/">{{ cat.name }}</a>
-            </li>
-        {% endfor %}
+        <li class="menu__item" {% if cat.lvl > 0 %}style="padding: 0 0 0 {{ cat.lvl }}8px"{% endif %}>
+            <a href="/{{ cat.slug }}/">{{ cat.name }}</a>
+        </li>
     {% endfor %}
 </ul>
 
