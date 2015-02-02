@@ -8,9 +8,13 @@
             <div class="prod_lis__img">
                 <img src="{{ item.image }}" alt="{{ item.category }}"/>
             </div>
-            <a href="/{{ item.category }}/{{ item.slug }}/">Подробнее >> </a>
+            <a href="/{{ item.category.slug }}/{{ item.slug }}/">Подробнее >> </a>
         </li>
     {% endfor %}
 </ul>
+
+<div>
+{{ test }}
+</div>
 
 {% endblock %}

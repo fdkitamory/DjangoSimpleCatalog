@@ -3,19 +3,16 @@
 {% block content %}
 
 <ul class="prod_list">
-    <li>Список категорий</li>
-    {% for category in categories %}
+    {% for item in items %}
         <li class="prod_list__item">
-            <h2>Категория: {{ category.name }}</h2>
-            <p>Родитель: {{ category.parent }}</p>
-            <p>URL: {{ category.slug }}</p>
+            <h2>{{ item.title }}</h2>
+            <div class="prod_lis__img">
+                <img src="{{ item.image }}" alt="{{ item.category }}"/>
+            </div>
+            <a href="/{{ item.category.slug }}/{{ item.slug }}/">Подробнее >> </a>
         </li>
     {% endfor %}
 </ul>
 
-
-<ul>
-    <li>Список товаров нужной категории</li>
-</ul>
 
 {% endblock %}
