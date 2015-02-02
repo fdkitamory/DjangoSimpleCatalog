@@ -5,13 +5,11 @@
         <br />
         <br />
     </li>
+     {{ lvl }}
     {% for cat in categories %}
-        <div>{{ lvl }}</div>
-        <div>{{ cat }}</div>
-        {% for subcategory in sub %}
-            <li class="menu__item">
-
-                <a href="/{{ subcategory.slug }}/">{{ subcategory.name }}</a>
+       {% for key in cat %}
+            <li class="menu__item{% if cat.lvl > 0 %} sub{% endif %}">
+                <a href="/{{ cat.slug }}/">{{ cat.name }}</a>
             </li>
         {% endfor %}
     {% endfor %}

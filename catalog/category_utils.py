@@ -28,41 +28,11 @@ def cat_tree_smooth(cats):
     cat_list = []
 
     for cat in cats:
-        cat_list_item = []
-        cat_list_item.append(u'{}'.format(cat['lvl']))
-        cat_list_item.append(u'{}'.format(translit.translify(cat['cat'].name)))
-        cat_list_item.append(u'{}'.format(cat['cat'].slug))
+        cat_list_item = {}
+        cat_list_item['lvl'] = cat['lvl']
+        cat_list_item['name'] = cat['cat'].name
+        cat_list_item['slug']=cat['cat'].slug
         cat_list.append(cat_list_item)
         cat_list.extend(cat_tree_smooth(cat['sub']))
 
     return cat_list
-
-
-
-# [{'cat': <ItemCategory: Мониторы>,
-#   'lvl': 0,
-#   'sub': [{'cat': <ItemCategory: benq>,
-#            'lvl': 1,
-#            'sub': [{'cat': <ItemCategory: 18.5 inch>, 'lvl': 2, 'sub': []},
-#                    {'cat': <ItemCategory: 21.5 inch>, 'lvl': 2, 'sub': []}]},
-#           {'cat': <ItemCategory: Самсунг>,
-#            'lvl': 1,
-#            'sub': [{'cat': <ItemCategory: 18.5 inch>, 'lvl': 2, 'sub': []},
-#                    {'cat': <ItemCategory: 21.5 inch>, 'lvl': 2, 'sub': []},
-#                    {'cat': <ItemCategory: 24 inch>, 'lvl': 2, 'sub': []}]}]},
-#  {'cat': <ItemCategory: Телевизоры>, 'lvl': 0, 'sub': []},
-#  {'cat': <ItemCategory: Телефоны>,
-#   'lvl': 0,
-#   'sub': [{'cat': <ItemCategory: Бабушкафоны>,
-#            'lvl': 1,
-#            'sub': []},
-#           {'cat': <ItemCategory: Смартфоны>, 'lvl': 1, 'sub': []}]}]
-
-
-
-
-
-
-
-
-# [[0, 'Cat_Title', SLUG], [0, 'Cat_Title', SLUG], [0, 'Cat_Title', SLUG], [0, 'Cat_Title', SLUG]]

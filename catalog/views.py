@@ -18,7 +18,7 @@ def index(request):
     template = loader.get_template('index.html')
     context = Context({
         'items': items,
-        'categories': categories,
+        'categories': cat_tree_smooth(categories),
     })
     return HttpResponse(template.render(context))
 
