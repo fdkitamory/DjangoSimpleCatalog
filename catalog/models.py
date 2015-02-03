@@ -36,19 +36,7 @@ class ItemCategory(models.Model):
                 instance.save()
 
     def get_absolute_url(self):
-        # if self.parent is not None:
-        #     url.append(self.slug)
-        #     ItemCategory.get_absolute_url(self.parent)
-        # elif self.parent is None:
-        #     url.append(self.slug)
-        url = u''
-        if self.parent is None:
-            return u'{}/'.format(self.slug)
-        else:
-            url = u'{}/'.format(self.slug)
-            ItemCategory.get_absolute_url(self.parent)
-
-        return url
+        return [self.slug] + (self.parent.get_absolute_url() if self.parent else [])
 
 
 class Item(models.Model):
