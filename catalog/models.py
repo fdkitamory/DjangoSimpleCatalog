@@ -35,6 +35,21 @@ class ItemCategory(models.Model):
                 instance.slug = slug
                 instance.save()
 
+    def get_absolute_url(self):
+        # if self.parent is not None:
+        #     url.append(self.slug)
+        #     ItemCategory.get_absolute_url(self.parent)
+        # elif self.parent is None:
+        #     url.append(self.slug)
+        url = u''
+        if self.parent is None:
+            return u'{}/'.format(self.slug)
+        else:
+            url = u'{}/'.format(self.slug)
+            ItemCategory.get_absolute_url(self.parent)
+
+        return url
+
 
 class Item(models.Model):
     title = models.CharField(max_length=50)

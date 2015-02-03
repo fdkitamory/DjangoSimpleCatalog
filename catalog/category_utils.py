@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 __author__ = 'frank'
 
-from pytils import translit
-from pprint import pprint
+# from pytils import translit
+# from pprint import pprint
+
 
 def cat_lvl(cat, depth=0):
     """Считаем вложеность категорий"""
@@ -25,11 +26,11 @@ def cat_tree_build(cats):
 
 
 def cat_tree_smooth(cats):
+    """Размазываем в удобочитаемый вид это же дерево"""
     cat_list = []
-
     for cat in cats:
         cat_list_item = {}
-        cat_list_item['lvl'] = cat['lvl']
+        cat_list_item['lvl'] = cat['lvl'] * 10
         cat_list_item['name'] = cat['cat'].name
         cat_list_item['slug']=cat['cat'].slug
         cat_list.append(cat_list_item)
