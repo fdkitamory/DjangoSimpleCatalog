@@ -35,8 +35,11 @@ class ItemCategory(models.Model):
                 instance.slug = slug
                 instance.save()
 
+    def _get_absolute_url(self):
+        return [self.slug] + (self.parent._get_absolute_url() if self.parent else [])
+
     def get_absolute_url(self):
-        return [self.slug] + (self.parent.get_absolute_url() if self.parent else [])
+        return '/'.join(reversed(self._get_absolute_url()))
 
 
 class Item(models.Model):
@@ -51,9 +54,8 @@ class Item(models.Model):
     def __unicode__(self):
         return u'#{}: {}'.format(self.pk, self.title)
 
-    # @permalink
-    # def get_absolute_url(self):
-    #     return 'item_detail', None, {'object_id': self.id}
+    def get_absolute_url(self):
+        return u'{}/{}/'.format(ItemCategory.get_absolute_url(self.category), self.slug)
 
     @staticmethod
     def pre_save(sender, instance, **kwargs):

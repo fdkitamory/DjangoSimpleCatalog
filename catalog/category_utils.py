@@ -3,7 +3,7 @@ __author__ = 'frank'
 
 # from pytils import translit
 # from pprint import pprint
-
+from mycatalog.catalog.models import ItemCategory
 
 def cat_lvl(cat, depth=0):
     """Считаем вложеность категорий"""
@@ -32,7 +32,7 @@ def cat_tree_smooth(cats):
         cat_list_item = {}
         cat_list_item['lvl'] = cat['lvl'] * 10
         cat_list_item['name'] = cat['cat'].name
-        cat_list_item['slug']=cat['cat'].slug
+        cat_list_item['slug']= ItemCategory.get_absolute_url(cat['cat'])
         cat_list.append(cat_list_item)
         cat_list.extend(cat_tree_smooth(cat['sub']))
 
