@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls.defaults import *
-# from mycatalog.catalog.views import index, categories
 
 urlpatterns = patterns('mycatalog.catalog.views',
     url(r'^$', 'index', name='index'),
