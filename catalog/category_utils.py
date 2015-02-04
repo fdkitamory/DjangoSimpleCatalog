@@ -15,10 +15,11 @@ def cat_tree_build(cats):
     cat_tree = []
 
     for cat in cats:
-        cat_branch = {}
-        cat_branch['cat'] = cat
-        cat_branch['lvl'] = cat_lvl(cat)
-        cat_branch['sub'] = cat.child.all()
+        cat_branch = {
+            'cat': cat,
+            'lvl': cat_lvl(cat),
+            'sub': cat.child.all()
+        }
         cat_branch['sub'] = cat_tree_build(cat_branch['sub'])
         cat_tree.append(cat_branch)
 
@@ -29,10 +30,11 @@ def cat_tree_smooth(cats):
     """Размазываем в удобочитаемый вид это же дерево"""
     cat_list = []
     for cat in cats:
-        cat_list_item = {}
-        cat_list_item['lvl'] = cat['lvl'] * 10
-        cat_list_item['name'] = cat['cat'].name
-        cat_list_item['slug']= ItemCategory.get_absolute_url(cat['cat'])
+        cat_list_item = {
+            'lvl': cat['lvl'] * 10,
+            'name': cat['cat'].name,
+            'slug': ItemCategory.get_absolute_url(cat['cat'])
+        }
         cat_list.append(cat_list_item)
         cat_list.extend(cat_tree_smooth(cat['sub']))
 
