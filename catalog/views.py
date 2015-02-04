@@ -13,7 +13,7 @@ def index(request):
     items = Item.objects.all()
     categories = ItemCategory.objects.filter(parent__isnull=True)
     categories = cat_tree_build(categories)
-    pprint(cat_tree_smooth(categories))
+    # pprint(cat_tree_smooth(categories))
 
     template = loader.get_template('index.html')
     context = Context({
@@ -23,10 +23,15 @@ def index(request):
     return HttpResponse(template.render(context))
 
 
-def categories(request, category_name):
+def categories(request, category):
     """Вывод категорий"""
-    items = Item.objects.filter(category__slug=category_name)
+
+    j = list(category)[0].split('/')
+
+
+    # items = Item.objects.filter(category__slug=category)
     # print cat_three_build(categories)
+    pprint(category)
     tpl = loader.get_template('categories.html')
-    c = Context({'items': items})
+    c = Context({'items': category})
     return HttpResponse(tpl._render(c))

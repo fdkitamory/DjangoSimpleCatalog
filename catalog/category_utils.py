@@ -5,6 +5,7 @@ __author__ = 'frank'
 # from pprint import pprint
 from mycatalog.catalog.models import ItemCategory
 
+
 def cat_lvl(cat, depth=0):
     """Считаем вложеность категорий"""
     return cat.parent and cat_lvl(cat.parent, depth+1) or depth
