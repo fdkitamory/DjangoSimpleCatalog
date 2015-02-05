@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from mycatalog.catalog.models import Item, ItemCategory
 from mycatalog.catalog.category_utils import cat_tree_build, cat_tree_smooth, get_cat_in_url
 from pprint import pprint
+from django.http import Http404
 
 
 def index(request):
@@ -27,9 +28,14 @@ def categories(request, url):
     """Вывод категорий"""
     # items = Item.objects.filter(category__slug=category)
     # print cat_three_build(categories)
+
     cat_in_url = get_cat_in_url(url)
 
-    # pprint(url)
+    if cat_in_url is False:
+        raise Http404
+
+
+    pprint(cat_in_url)
     tpl = loader.get_template('categories.html')
-    c = Context({'items': url})
+    c = Context({'items': cat_in_url})
     return HttpResponse(tpl._render(c))

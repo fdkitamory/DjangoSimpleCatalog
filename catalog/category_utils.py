@@ -4,7 +4,7 @@ __author__ = 'frank'
 # from pytils import translit
 # from pprint import pprint
 from mycatalog.catalog.models import ItemCategory
-
+from django.http import Http404
 
 def cat_lvl(cat, depth=0):
     """Считаем вложеность категорий"""
@@ -46,17 +46,24 @@ def get_cat_in_url(url):
     """Получаем обратный список категорий из урла"""
     categories = ItemCategory.objects.all()
     url = url.split('/')
+    url = url[-2::-1]
     cats_in_url = []
+    # print (u'url out of FOR', url)
 
-    for cat_in_url in url[::-1]:
-        for category in categories:
-            if category.slug == cat_in_url:
-                if not cats_in_url:
-                    cats_in_url.append(category)
-                elif cats_in_url[-1].parent == category:
-                    cats_in_url.append(category)
-                else:
-                    return u'your lin shiiit!'
+    for slug in url:
+        if categories.filter(slug=slug):
+            category = categories.filter(slug=slug)[0]
+            print(cats_in_url)
+            if not cats_in_url:
+                cats_in_url.append(category)
+            elif category == cats_in_url[-1].parent:
+                cats_in_url.append(category)
+            else:
+                # return u'check parent list'
+                return False
+        else:
+            # return u'check base match'
+            return False
 
     return cats_in_url
 
