@@ -26,16 +26,16 @@ def index(request):
 
 def categories(request, url):
     """Вывод категорий"""
-    # items = Item.objects.filter(category__slug=category)
-    # print cat_three_build(categories)
-
     cat_in_url = get_cat_in_url(url)
 
     if cat_in_url is False:
         raise Http404
+    else:
+        for cat in cat_in_url:
 
+        items = Item.objects.filter(category__slug=cat_in_url[0])
 
     pprint(cat_in_url)
     tpl = loader.get_template('categories.html')
-    c = Context({'items': cat_in_url})
+    c = Context({'items': items})
     return HttpResponse(tpl._render(c))

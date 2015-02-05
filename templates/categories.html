@@ -3,16 +3,15 @@
 {% block content %}
 
 <ul class="prod_list">
-{#    {% for item in items %}#}
-{#        <li class="prod_list__item">#}
-{#            <h2>{{ item.title }}</h2>#}
-{#            <div class="prod_lis__img">#}
-{#                <img src="{{ item.image }}" alt="{{ item.category }}"/>#}
-{#            </div>#}
-{#            <a href="/{{ item.category.slug }}/{{ item.slug }}/">Подробнее >> </a>#}
-{#        </li>#}
-        {{ items }}
-{#    {% endfor %}#}
+    {% for item in items %}
+        <li class="prod_list__item">
+            <h2>{{ item.title }}</h2>
+            <div class="prod_lis__img">
+                <img src="{{ item.image }}" alt="{{ item.category }}"/>
+            </div>
+            <a href="/{{ item.category.slug }}/{{ item.slug }}/">Подробнее >> </a>
+        </li>
+    {% endfor %}
 </ul>
 
 
