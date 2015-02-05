@@ -4,7 +4,7 @@
 from django.template import loader, Context
 from django.http import HttpResponse
 from mycatalog.catalog.models import Item, ItemCategory
-from mycatalog.catalog.category_utils import cat_tree_build, cat_tree_smooth
+from mycatalog.catalog.category_utils import cat_tree_build, cat_tree_smooth, get_cat_in_url
 from pprint import pprint
 
 
@@ -23,15 +23,13 @@ def index(request):
     return HttpResponse(template.render(context))
 
 
-def categories(request, category):
+def categories(request, url):
     """Вывод категорий"""
-
-    j = list(category)[0].split('/')
-
-
     # items = Item.objects.filter(category__slug=category)
     # print cat_three_build(categories)
-    pprint(category)
+    cat_in_url = get_cat_in_url(url)
+
+    # pprint(url)
     tpl = loader.get_template('categories.html')
-    c = Context({'items': category})
+    c = Context({'items': url})
     return HttpResponse(tpl._render(c))

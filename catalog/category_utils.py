@@ -40,3 +40,40 @@ def cat_tree_smooth(cats):
         cat_list.extend(cat_tree_smooth(cat['sub']))
 
     return cat_list
+
+
+def get_cat_in_url(url):
+    """Получаем обратный список категорий из урла"""
+    categories = ItemCategory.objects.all()
+    url = url.split('/')
+    cats_in_url = []
+
+    for cat_in_url in url[::-1]:
+        for category in categories:
+            if category.slug == cat_in_url:
+                if not cats_in_url:
+                    cats_in_url.append(category)
+                elif cats_in_url[-1].parent == category:
+                    cats_in_url.append(category)
+                else:
+                    return u'your lin shiiit!'
+
+    return cats_in_url
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
