@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 __author__ = 'frank'
 
-# from pytils import translit
 # from pprint import pprint
 from mycatalog.catalog.models import ItemCategory
-from django.http import Http404
+
 
 def cat_lvl(cat, depth=0):
     """Считаем вложеность категорий"""

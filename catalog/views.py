@@ -32,8 +32,7 @@ def categories(request, url):
         raise Http404
     else:
         for cat in cat_in_url:
-
-        items = Item.objects.filter(category__slug=cat_in_url[0])
+            items = Item.objects.filter(category__slug=cat_in_url[0])
 
     pprint(cat_in_url)
     tpl = loader.get_template('categories.html')

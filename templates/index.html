@@ -6,7 +6,8 @@
         <li class="prod_list__item">
             <h2>{{ item.title }}</h2>
             <div class="prod_lis__img">
-                <img src="{{ item.image }}" alt="{{ item.category }}"/>
+                {# Быдло кодинг, переделаю чуть позже это не самая важная балалайка #}
+                <img src="static/media/{{ item.image }}" alt="{{ item.category }}"/>
             </div>
             <a href="{{ item.get_absolute_url }}">Подробнее >> </a>
         </li>
