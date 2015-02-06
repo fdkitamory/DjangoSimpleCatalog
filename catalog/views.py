@@ -26,8 +26,7 @@ def index(request):
 
 def categories(request, url):
     """Вывод категорий"""
-    cat_in_url = get_cat_in_url(url)[0]
-
+    cat_in_url = get_cat_in_url(url)
     item = 'Эээ, сорян категория пуста'
     items = []
     if cat_in_url is False:
@@ -42,7 +41,7 @@ def categories(request, url):
     categories = ItemCategory.objects.filter(parent__isnull=True)
     categories = cat_tree_build(categories)
 
-    tpl = loader.get_template('categories.html')
+    template = loader.get_template('categories.html')
     if not items:
         context = Context({
             'item': item,
@@ -54,4 +53,46 @@ def categories(request, url):
             'categories': cat_tree_smooth(categories),
         })
 
-    return HttpResponse(tpl._render(context))
+    return HttpResponse(template._render(context))
+
+
+def item(request, url_item):
+
+    item = 'Hello!'
+
+    context = Context({'item': item})
+    template = loader.get_template('item.html')
+    return HttpResponse(template._render(context))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

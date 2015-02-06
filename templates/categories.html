@@ -6,7 +6,7 @@
     {% if items %}
         {% for item in items %}
             <li class="prod_list__item">
-                <a class="prod_list__link" href="{{ item.get_absolute_url }}">
+                <a class="prod_list__link" href="/{{ item.get_absolute_url }}">
                     <h2>{{ item.title }}</h2>
                     <div class="prod_lis__img">
                         <img src="/static/media/{{ item.image }}" alt="{{ item.category }}"/>

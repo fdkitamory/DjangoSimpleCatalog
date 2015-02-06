@@ -49,6 +49,7 @@
                     position: relative;
                     width: 200px;
                     color: #fff;
+                    background: #fff;
                     overflow: hidden;
                 }
                 .prod_list__item h2{
