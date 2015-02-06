@@ -1,21 +1,22 @@
 {% extends "base.html" %}
 
 {% block content %}
-<ul class="prod_list">
-    {% for item in items %}
-        <li class="prod_list__item">
-            <h2>{{ item.title }}</h2>
-            <div class="prod_lis__img">
-                {# Быдло кодинг, переделаю чуть позже это не самая важная балалайка #}
-                <img src="static/media/{{ item.image }}" alt="{{ item.category }}"/>
-            </div>
-            <a href="{{ item.get_absolute_url }}">Подробнее >> </a>
-        </li>
-    {% endfor %}
-</ul>
 
-<div>
-{{ test }}
-</div>
+<ul class="prod_list">
+    {% if items %}
+        {% for item in items %}
+            <li class="prod_list__item">
+                <a class="prod_list__link" href="{{ item.get_absolute_url }}">
+                    <h2>{{ item.title }}</h2>
+                    <div class="prod_lis__img">
+                        <img src="/static/media/{{ item.image }}" alt="{{ item.category }}"/>
+                    </div>
+                </a>
+            </li>
+        {% endfor %}
+    {% else %}
+        {{ item }}
+    {% endif %}
+</ul>
 
 {% endblock %}

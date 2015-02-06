@@ -39,11 +39,19 @@ def categories(request, url):
         for cat in cats:
             items.extend(cat.item.all())
 
-    tpl = loader.get_template('categories.html')
+    categories = ItemCategory.objects.filter(parent__isnull=True)
+    categories = cat_tree_build(categories)
 
+    tpl = loader.get_template('categories.html')
     if not items:
-        context = Context({'item': item})
+        context = Context({
+            'item': item,
+            'categories': cat_tree_smooth(categories),
+        })
     else:
-        context = Context({'items': items})
+        context = Context({
+            'items': items,
+            'categories': cat_tree_smooth(categories),
+        })
 
     return HttpResponse(tpl._render(context))
