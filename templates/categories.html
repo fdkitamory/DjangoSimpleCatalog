@@ -3,15 +3,19 @@
 {% block content %}
 
 <ul class="prod_list">
-    {% for item in items %}
-        <li class="prod_list__item">
-            <h2>{{ item.title }}</h2>
-            <div class="prod_lis__img">
-                <img src="{{ item.image }}" alt="{{ item.category }}"/>
-            </div>
-            <a href="/{{ item.category.slug }}/{{ item.slug }}/">Подробнее >> </a>
-        </li>
-    {% endfor %}
+    {% if items %}
+        {% for item in items %}
+            <li class="prod_list__item">
+                <h2>{{ item.title }}</h2>
+                <div class="prod_lis__img">
+                    <img src="/static/media/{{ item.image }}" alt="{{ item.category }}"/>
+                </div>
+                <a href="/{{ item.category.slug }}/{{ item.slug }}/">Подробнее >> </a>
+            </li>
+        {% endfor %}
+    {% else %}
+        {{ item }}
+    {% endif %}
 </ul>
 
 

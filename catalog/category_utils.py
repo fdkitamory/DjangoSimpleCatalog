@@ -42,29 +42,39 @@ def cat_tree_smooth(cats):
 
 
 def get_cat_in_url(url):
-    """Получаем обратный список категорий из урла"""
+    """Получаем обратный список категорий из урла
+       Не нравится что БД дергается каждый раз, переписать через построение дерева выше"""
     categories = ItemCategory.objects.all()
     url = url.split('/')
     url = url[-2::-1]
     cats_in_url = []
-    # print (u'url out of FOR', url)
 
     for slug in url:
         if categories.filter(slug=slug):
             category = categories.filter(slug=slug)[0]
-            print(cats_in_url)
             if not cats_in_url:
                 cats_in_url.append(category)
             elif category == cats_in_url[-1].parent:
                 cats_in_url.append(category)
             else:
-                # return u'check parent list'
                 return False
         else:
-            # return u'check base match'
             return False
 
     return cats_in_url
+
+
+def cat_childs(cat):
+    """Получаем чайлдов полученой категории"""
+    childs = []
+    childs.extend(cat.child.all())
+    for child in childs:
+        childs.extend(child.child.all())
+        cat_childs(child)
+
+    return childs
+
+
 
 
 

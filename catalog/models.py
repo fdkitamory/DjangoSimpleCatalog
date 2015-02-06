@@ -45,7 +45,7 @@ class ItemCategory(models.Model):
 class Item(models.Model):
     title = models.CharField(max_length=50)
     image = models.ImageField(upload_to='img')
-    category = models.ForeignKey(ItemCategory, null=True)
+    category = models.ForeignKey(ItemCategory, null=True, related_name='item')
     slug = models.SlugField(blank=True, null=True, unique=True)
 
     class Meta():
