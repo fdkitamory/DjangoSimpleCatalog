@@ -52,16 +52,21 @@ def categories(request, url):
             'items': items,
             'categories': cat_tree_smooth(categories),
         })
-    # pprint(url)
-    # context = Context({'item': url})
+
     return HttpResponse(template._render(context))
 
 
 def item(request, url):
 
-    item = 'Hello!'
+    item = url
 
-    context = Context({'item': item})
+    pprint(url)
+    categories = ItemCategory.objects.filter(parent__isnull=True)
+    categories = cat_tree_build(categories)
+    context = Context({
+        'item': item,
+        'categories': cat_tree_smooth(categories),
+    })
     template = loader.get_template('item.html')
     return HttpResponse(template._render(context))
 

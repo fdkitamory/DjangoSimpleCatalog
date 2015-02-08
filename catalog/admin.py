@@ -9,7 +9,7 @@ class ItemCategoryAdm(admin.ModelAdmin):
 
 
 class ItemAdm(admin.ModelAdmin):
-    list_display = ('title', 'image')
+    list_display = ('title', 'slug', 'image')
 
 admin.site.register(ItemCategory, ItemCategoryAdm)
 admin.site.register(Item, ItemAdm)
