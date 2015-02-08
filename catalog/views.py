@@ -57,7 +57,7 @@ def categories(request, url):
     return HttpResponse(template._render(context))
 
 
-def item(request, url_item):
+def item(request, url):
 
     item = 'Hello!'
 
