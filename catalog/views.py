@@ -26,7 +26,7 @@ def index(request):
 
 def categories(request, url):
     """Вывод категорий"""
-    cat_in_url = get_cat_in_url(url)
+    cat_in_url = get_cat_in_url(url)[0]
     item = 'Эээ, сорян категория пуста'
     items = []
     if cat_in_url is False:
@@ -52,7 +52,8 @@ def categories(request, url):
             'items': items,
             'categories': cat_tree_smooth(categories),
         })
-
+    # pprint(url)
+    # context = Context({'item': url})
     return HttpResponse(template._render(context))
 
 
