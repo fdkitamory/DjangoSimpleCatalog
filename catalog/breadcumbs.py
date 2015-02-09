@@ -1,7 +1,7 @@
 __author__ = 'frank'
 
 
-def breadcrumb_processor(request):
+def breadcrumbs(request):
     return {
         'breadcrumbs': request.path.split('/')
     }

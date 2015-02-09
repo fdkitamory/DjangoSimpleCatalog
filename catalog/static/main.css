@@ -90,6 +90,9 @@
                     .prod_lis__img img{
                         width: 100%;
                     }
+        .pagination{
+            text-align: center;
+        }
 
         .clearfix:after{
             visibility: hidden;

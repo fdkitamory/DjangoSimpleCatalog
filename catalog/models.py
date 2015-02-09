@@ -18,7 +18,7 @@ class ItemCategory(models.Model):
         verbose_name_plural = 'Categories'
 
     def __unicode__(self):
-        return u'{}_({})'.format(self.name, self.parent)
+        return u'{}'.format(self.name)
 
     @staticmethod
     def pre_save(sender, instance, **kwargs):
