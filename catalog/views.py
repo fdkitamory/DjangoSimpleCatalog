@@ -27,7 +27,7 @@ def index(request):
 def categories(request, url):
     """Вывод категорий"""
     cat_in_url = get_cat_in_url(url)[0]
-    item = 'Эээ, сорян категория пуста'
+    item_err = 'Эээ, сорян категория пуста'
     items = []
     if cat_in_url is False:
         raise Http404
@@ -38,13 +38,17 @@ def categories(request, url):
         for cat in cats:
             items.extend(cat.item.all())
 
+    for item in items:
+        if not item.image:
+            item.image = item.category.image
+
     categories = ItemCategory.objects.filter(parent__isnull=True)
     categories = cat_tree_build(categories)
 
     template = loader.get_template('categories.html')
     if not items:
         context = Context({
-            'item': item,
+            'item': item_err,
             'categories': cat_tree_smooth(categories),
         })
     else:
@@ -57,11 +61,15 @@ def categories(request, url):
 
 
 def item(request, url):
-    item = url.split('/')[-2:1:-1]
-    categories = url.split('/')[-3::-1]
+    item = url.split('/')[-2:1:-1][0]
+    cats = url.split('/')[-3::-1]
+
+    item = Item.objects.filter(slug=item)[0]
+
+    if not item.image:
+        item.image = item.category.image
 
     pprint(item)
-    pprint(categories)
     categories = ItemCategory.objects.filter(parent__isnull=True)
     categories = cat_tree_build(categories)
     context = Context({

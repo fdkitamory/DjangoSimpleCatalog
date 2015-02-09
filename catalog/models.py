@@ -18,7 +18,7 @@ class ItemCategory(models.Model):
         verbose_name_plural = 'Categories'
 
     def __unicode__(self):
-        return u'{0}'.format(self.name)
+        return u'{}_({})'.format(self.name, self.parent)
 
     @staticmethod
     def pre_save(sender, instance, **kwargs):
@@ -44,7 +44,7 @@ class ItemCategory(models.Model):
 
 class Item(models.Model):
     title = models.CharField(max_length=50)
-    image = models.ImageField(upload_to='img')
+    image = models.ImageField(upload_to='img', null=True, blank=True)
     category = models.ForeignKey(ItemCategory, null=True, related_name='item')
     slug = models.SlugField(blank=True, null=True, unique=True)
 

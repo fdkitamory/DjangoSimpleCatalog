@@ -2,6 +2,12 @@
 
 {% block content %}
 
-{{ item }}
+<div class="item">
+    <h2>{{ item.title }}</h2>
+    <span>{{ item.category }}</span>
+    <div class="item__img">
+        <img src="/static/media/{{ item.image }}" alt=""/>
+    </div>
+</div>
 
 {% endblock %}
