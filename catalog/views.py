@@ -7,6 +7,8 @@ from mycatalog.catalog.models import Item, ItemCategory
 from mycatalog.catalog.category_utils import *
 from pprint import pprint
 from django.http import Http404
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.shortcuts import render_to_response
 
 
 def index(request):
@@ -16,12 +18,10 @@ def index(request):
     categories = cat_tree_build(categories)
     # pprint(cat_tree_smooth(categories))
 
-    template = loader.get_template('index.html')
-    context = Context({
+    return render_to_response('index.html', {
         'items': items,
         'categories': cat_tree_smooth(categories),
     })
-    return HttpResponse(template.render(context))
 
 
 def categories(request, url):
@@ -45,19 +45,16 @@ def categories(request, url):
     categories = ItemCategory.objects.filter(parent__isnull=True)
     categories = cat_tree_build(categories)
 
-    template = loader.get_template('categories.html')
     if not items:
-        context = Context({
+        return render_to_response('categories.html', {
             'item': item_err,
             'categories': cat_tree_smooth(categories),
         })
     else:
-        context = Context({
+        return render_to_response('categories.html', {
             'items': items,
             'categories': cat_tree_smooth(categories),
         })
-
-    return HttpResponse(template._render(context))
 
 
 def item(request, url):
@@ -76,8 +73,11 @@ def item(request, url):
         'item': item,
         'categories': cat_tree_smooth(categories),
     })
-    template = loader.get_template('item.html')
-    return HttpResponse(template._render(context))
+
+    return render_to_response('item.html', {
+        'items': items,
+        'categories': cat_tree_smooth(categories),
+    })
 
 
 
