@@ -4,6 +4,7 @@
 from mycatalog.catalog.models import Item, ItemCategory
 from mycatalog.catalog.category_utils import *
 from mycatalog.catalog.pagination import page_pagination
+from mycatalog.catalog.breadcumbs import breadcrumbs
 from pprint import pprint
 from django.http import Http404
 
@@ -37,14 +38,14 @@ def categories_page(request, url):
         for cat in cats:
             items.extend(cat.item.all())
 
-    for item in items:
-        if not item.image:
-            item.image = item.category.image
-
     category_list = ItemCategory.objects.filter(parent__isnull=True)
     category_list = cat_tree_build(category_list)
 
     items = page_pagination(request, items, 12)
+
+    bread = breadcrumbs(url)
+
+    pprint(bread)
 
     if not items:
         return render_to_response('categories.html', {
@@ -67,9 +68,6 @@ def item_page(request, url):
     pprint(item)
     category_list = ItemCategory.objects.filter(parent__isnull=True)
     category_list = cat_tree_build(category_list)
-
-    this_is_url = request.get_full_path()
-    pprint(this_is_url)
 
     return render_to_response('item.html', {
         'item': item,
