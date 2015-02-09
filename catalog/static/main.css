@@ -1,4 +1,5 @@
         body{
+            margin: 0;
             background: #FFF;
         }
         .wrapper{
@@ -7,9 +8,16 @@
             margin: 0 auto;
             background: #c0c0c0;
         }
+        .header{
+            height: 200px;
+        }
+            .header h1{
+                float: left;
+                margin: 0;
+            }
         .nav{
             float: left;
-            width: 300px;
+            width: 200px;
             margin: 0 20px 0 0;
             background: #fff;
         }
@@ -47,7 +55,7 @@
                 .prod_list__link{
                     display: block;
                     position: relative;
-                    width: 200px;
+                    width: 175px;
                     color: #fff;
                     background: #fff;
                     overflow: hidden;

@@ -57,10 +57,11 @@ def categories(request, url):
 
 
 def item(request, url):
+    item = url.split('/')[-2:1:-1]
+    categories = url.split('/')[-3::-1]
 
-    item = url
-
-    pprint(url)
+    pprint(item)
+    pprint(categories)
     categories = ItemCategory.objects.filter(parent__isnull=True)
     categories = cat_tree_build(categories)
     context = Context({
