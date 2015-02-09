@@ -15,7 +15,7 @@ def index(request):
     items = Item.objects.all()
     categories = ItemCategory.objects.filter(parent__isnull=True)
     categories = cat_tree_build(categories)
-    items = page_pagination(request, items)
+    items = page_pagination(request, items, 12)
     return render_to_response('index.html', {
         'items': items,
         'categories': cat_tree_smooth(categories),
@@ -42,6 +42,8 @@ def categories_page(request, url):
 
     category_list = ItemCategory.objects.filter(parent__isnull=True)
     category_list = cat_tree_build(category_list)
+
+    items = page_pagination(request, items, 12)
 
     if not items:
         return render_to_response('categories.html', {

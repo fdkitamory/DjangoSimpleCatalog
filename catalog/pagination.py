@@ -3,8 +3,8 @@ __author__ = 'frank'
 from django.core.paginator import Paginator, EmptyPage
 
 
-def page_pagination(request, paginate_items):
-    paginator = Paginator(paginate_items, 3)
+def page_pagination(request, paginate_items, number_of_pages):
+    paginator = Paginator(paginate_items, number_of_pages)
     page = request.GET.get('page', '1')
     page = int(page)
 
