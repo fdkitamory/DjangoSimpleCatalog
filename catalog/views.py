@@ -7,7 +7,7 @@ from mycatalog.catalog.models import Item, ItemCategory
 from mycatalog.catalog.category_utils import *
 from pprint import pprint
 from django.http import Http404
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import Paginator, EmptyPage
 from django.shortcuts import render_to_response
 
 
@@ -17,6 +17,19 @@ def index(request):
     categories = ItemCategory.objects.filter(parent__isnull=True)
     categories = cat_tree_build(categories)
     # pprint(cat_tree_smooth(categories))
+
+    pprint(items)
+    paginator = Paginator(items, 3)
+
+    pprint(paginator)
+    page = request.GET.get('page', '1')
+    page = int(page)
+
+    try:
+        items = paginator.page(page)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        items = paginator.page(paginator.num_pages)
 
     return render_to_response('index.html', {
         'items': items,

@@ -4,7 +4,7 @@
 
 <ul class="prod_list">
     {% if items %}
-        {% for item in items %}
+        {% for item in items.object_list %}
             <li class="prod_list__item">
                 <a class="prod_list__link" href="{{ item.get_absolute_url }}">
                     <h2>{{ item.title }}</h2>
@@ -18,5 +18,21 @@
         {{ item }}
     {% endif %}
 </ul>
+<div class="pagination">
+    <span class="step-links">
+        {% if items.has_previous %}
+            <a href="?page={{ items.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ items.number }} of {{ items.paginator.num_pages }}.
+        </span>
+
+        {% if items.has_next %}
+            <a href="?page={{ items.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+
 
 {% endblock %}
