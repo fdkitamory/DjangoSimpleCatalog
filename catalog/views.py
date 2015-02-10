@@ -60,11 +60,15 @@ def item_page(request, url):
 
 def search_page(request):
     items = []
+
     if request.method == 'POST':
         form_search = SearchForm(request.POST)
         if form_search.is_valid():
             items = Item.objects.filter(title__contains=request.POST['query'])
-            # return render_to_response('search_page.html', {'hello': 'Hello World! I`m search! :)'})
+    elif request.method == 'GET':
+        form_search = SearchForm(request.GET)
+        if form_search.is_valid():
+            items = Item.objects.filter(title__contains=request.GET['query'])
     else:
         form_search = SearchForm()
 
