@@ -16,11 +16,13 @@ from django.core.context_processors import csrf
 def index(request):
     """Главная"""
     items = Item.objects.all()
-    print(request.get_full_path())
-    return render_to_response('index.html', {
+    context = {
         'items': page_pagination(request, items, 12),
         'categories': cat_menu(),
-    })
+        'form_search': SearchForm()
+    }
+    context.update(csrf(request))
+    return render_to_response('index.html', context)
 
 
 def categories_page(request, url):
@@ -37,24 +39,18 @@ def categories_page(request, url):
 
     context = {
         'links': breadcrumbs(url),
-        'categories': cat_menu()
+        'categories': cat_menu(),
+        'items': page_pagination(request, items, 12),
+        'item_err': 'Эээ, сорян категория пуста',
+        'form_search': SearchForm()
     }
-
-    if not items:
-        context['item_err'] = 'Эээ, сорян категория пуста'
-    else:
-        context['items'] = page_pagination(request, items, 12)
-
+    context.update(csrf(request))
     return render_to_response('categories.html', context)
 
 
 def item_page(request, url):
     item = url.split('/')[-2:1:-1][0]
-    # cats = url.split('/')[-3::-1]
-
-    # print(url)
     item = Item.objects.filter(slug=item)[0]
-
     return render_to_response('item.html', {
         'links': breadcrumbs(url),
         'item': item,
@@ -63,46 +59,24 @@ def item_page(request, url):
 
 
 def search_page(request):
-
+    items = []
     if request.method == 'POST':
         form_search = SearchForm(request.POST)
         if form_search.is_valid():
-            return render_to_response('search.html', {'hello': 'Hello World! I`m search! :)'})
+            items = Item.objects.filter(title__contains=request.POST['query'])
+            # return render_to_response('search_page.html', {'hello': 'Hello World! I`m search! :)'})
     else:
         form_search = SearchForm()
 
     context = {
         'form_search': form_search,
+        'links': ['Поиск'],
+        'categories': cat_menu(),
+        'items': items,
+        'item_err': 'Нет результата или указана пустая строка, попробуйте ещё раз'
     }
-    # context = {
-    #     'form_search': 'Hello World!',
-    # }
-
-    return render_to_response('search.html', context)
-
-
-
-
-
-
-
-
-
-
-
-# def contact(request):
-#     if request.method == 'POST': # If the form has been submitted...
-#         form = ContactForm(request.POST) # A form bound to the POST data
-#         if form.is_valid(): # All validation rules pass
-#             # Process the data in form.cleaned_data
-#             # ...
-#             return HttpResponseRedirect('/thanks/') # Redirect after POST
-#     else:
-#         form = ContactForm() # An unbound form
-#
-#     return render_to_response('contact.html', {
-#         'form': form,
-#     })
+    context.update(csrf(request))
+    return render_to_response('search_page.html', context)
 
 
 

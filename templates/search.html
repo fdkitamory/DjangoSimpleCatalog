@@ -1,8 +1,7 @@
 <div class="search_form">
-    {% csrf_token %}
-    {{ form_search }}
     <form action="/search/" method="post" >
-        <input type="text" name="search_query" id=""/>
+        {% csrf_token %}
+        {{ form_search.query }}
         <input type="submit" value="Search"/>
     </form>
 </div>
