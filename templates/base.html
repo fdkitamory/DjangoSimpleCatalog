@@ -19,7 +19,7 @@
         <div class="content">
             {% block content %}{% endblock %}
 
-            {% if items and items.paginator.num_pages > 1%}
+            {% if items and items.paginator.num_pages > 1 %}
                 {% include "paginator.html" %}
             {% endif %}
         </div>

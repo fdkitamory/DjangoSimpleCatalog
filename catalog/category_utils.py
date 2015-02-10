@@ -75,7 +75,8 @@ def cat_childs(cat):
     return childs
 
 
-
+def cat_menu():
+    return cat_tree_smooth(cat_tree_build(ItemCategory.objects.filter(parent__isnull=True)))
 
 
 

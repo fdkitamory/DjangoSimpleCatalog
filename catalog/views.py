@@ -14,19 +14,15 @@ from django.shortcuts import render_to_response
 def index(request):
     """Главная"""
     items = Item.objects.all()
-    categories = ItemCategory.objects.filter(parent__isnull=True)
-    categories = cat_tree_build(categories)
-    items = page_pagination(request, items, 12)
 
     return render_to_response('index.html', {
-        'items': items,
-        'categories': cat_tree_smooth(categories),
+        'items': page_pagination(request, items, 12),
+        'categories': cat_menu(),
     })
 
 
 def categories_page(request, url):
     """Вывод категорий"""
-    item_err = 'Эээ, сорян категория пуста'
     items = []
 
     if get_cat_in_url(url)[0] is False:
@@ -38,19 +34,16 @@ def categories_page(request, url):
         for cat in cats:
             items.extend(cat.item.all())
 
-    category_list = ItemCategory.objects.filter(parent__isnull=True)
-    category_list = cat_tree_build(category_list)
-
     if not items:
         return render_to_response('categories.html', {
-            'item_err': item_err,
-            'categories': cat_tree_smooth(category_list),
+            'item_err': 'Эээ, сорян категория пуста',
+            'categories': cat_menu(),
             'links': breadcrumbs(url)
         })
     else:
         return render_to_response('categories.html', {
             'items': page_pagination(request, items, 12),
-            'categories': cat_tree_smooth(category_list),
+            'categories': cat_menu(),
             'links': breadcrumbs(url)
         })
 
@@ -61,7 +54,6 @@ def item_page(request, url):
 
     item = Item.objects.filter(slug=item)[0]
 
-    pprint(item)
     category_list = ItemCategory.objects.filter(parent__isnull=True)
     category_list = cat_tree_build(category_list)
 
