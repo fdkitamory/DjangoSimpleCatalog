@@ -43,19 +43,21 @@ def categories_page(request, url):
 
     items = page_pagination(request, items, 12)
 
-    bread = breadcrumbs(url)
+    links = breadcrumbs(url)
 
-    pprint(bread)
+    # pprint(bread)
 
     if not items:
         return render_to_response('categories.html', {
             'item_err': item_err,
             'categories': cat_tree_smooth(category_list),
+            'links': links
         })
     else:
         return render_to_response('categories.html', {
             'items': items,
             'categories': cat_tree_smooth(category_list),
+            'links': links
         })
 
 

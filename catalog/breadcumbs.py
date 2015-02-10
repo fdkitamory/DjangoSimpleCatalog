@@ -1,16 +1,19 @@
 __author__ = 'frank'
-from mycatalog.catalog.models import Item, ItemCategory
+from mycatalog.catalog.models import ItemCategory
 
 
 def breadcrumbs(url):
-    cats = url.split('/')[-2::-1]
+    cats = url.split('/')[:-1]
+    print(cats)
     links = []
     for cat in cats:
         item = ItemCategory.objects.filter(slug=cat)[0]
-        print(item)
+        # print(item)
         link = [
             item.name,
-            cat
+            u'/{}'.format(item.get_absolute_url())
         ]
         links.append(link)
+
+    print(links)
     return links
