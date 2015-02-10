@@ -14,7 +14,7 @@ from django.shortcuts import render_to_response
 def index(request):
     """Главная"""
     items = Item.objects.all()
-
+    print(request.get_full_path())
     return render_to_response('index.html', {
         'items': page_pagination(request, items, 12),
         'categories': cat_menu(),
@@ -23,43 +23,40 @@ def index(request):
 
 def categories_page(request, url):
     """Вывод категорий"""
-    items = []
-
     if get_cat_in_url(url)[0] is False:
         raise Http404
     else:
+        items = []
         cats = get_cat_in_url(url)
         cats.extend(cat_childs(cats[0]))
 
         for cat in cats:
             items.extend(cat.item.all())
 
+    context = {
+        'links': breadcrumbs(url),
+        'categories': cat_menu()
+    }
+
     if not items:
-        return render_to_response('categories.html', {
-            'item_err': 'Эээ, сорян категория пуста',
-            'categories': cat_menu(),
-            'links': breadcrumbs(url)
-        })
+        context['item_err'] = 'Эээ, сорян категория пуста'
     else:
-        return render_to_response('categories.html', {
-            'items': page_pagination(request, items, 12),
-            'categories': cat_menu(),
-            'links': breadcrumbs(url)
-        })
+        context['items'] = page_pagination(request, items, 12)
+
+    return render_to_response('categories.html', context)
 
 
 def item_page(request, url):
     item = url.split('/')[-2:1:-1][0]
-    cats = url.split('/')[-3::-1]
+    # cats = url.split('/')[-3::-1]
 
+    # print(url)
     item = Item.objects.filter(slug=item)[0]
 
-    category_list = ItemCategory.objects.filter(parent__isnull=True)
-    category_list = cat_tree_build(category_list)
-
     return render_to_response('item.html', {
+        'links': breadcrumbs(url),
         'item': item,
-        'categories': cat_tree_smooth(category_list),
+        'categories': cat_menu(),
     })
 
 

@@ -3,9 +3,9 @@
         <a href="/">Главная</a>
         {% for link in links %}
             {% if forloop.last %}
-                &nbsp;/&nbsp;<span>{{ link.0 }}</span>
+                &nbsp;/&nbsp;<span>{{ link.title }}</span>
             {% else %}
-                &nbsp;/&nbsp;<a href="{{ link.1 }}">{{ link.0 }}</a>
+                &nbsp;/&nbsp;<a href="{{ link.link }}">{{ link.title }}</a>
             {% endif %}
         {% endfor %}
     </div>
