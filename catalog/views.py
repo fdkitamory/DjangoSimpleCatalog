@@ -8,7 +8,7 @@ from mycatalog.catalog.breadcumbs import breadcrumbs
 from mycatalog.catalog.search import SearchForm
 from pprint import pprint
 from django.http import Http404
-
+from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.core.context_processors import csrf
 
@@ -79,7 +79,7 @@ def search_page(request):
         'items': items,
         'item_err': 'Нет результата или указана пустая строка, попробуйте ещё раз'
     }
-    context.update(csrf(request))
+    # context.update(csrf(request))
     return render_to_response('search_page.html', context)
 
 
