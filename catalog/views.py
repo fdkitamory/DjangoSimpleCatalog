@@ -41,23 +41,17 @@ def categories_page(request, url):
     category_list = ItemCategory.objects.filter(parent__isnull=True)
     category_list = cat_tree_build(category_list)
 
-    items = page_pagination(request, items, 12)
-
-    links = breadcrumbs(url)
-
-    # pprint(bread)
-
     if not items:
         return render_to_response('categories.html', {
             'item_err': item_err,
             'categories': cat_tree_smooth(category_list),
-            'links': links
+            'links': breadcrumbs(url)
         })
     else:
         return render_to_response('categories.html', {
-            'items': items,
+            'items': page_pagination(request, items, 12),
             'categories': cat_tree_smooth(category_list),
-            'links': links
+            'links': breadcrumbs(url)
         })
 
 

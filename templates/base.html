@@ -2,12 +2,6 @@
 <html>
 <head>
     <title>my first Django project</title>
-
-    <style type="text/css">
-
-
-    </style>
-
     <link rel="stylesheet" href="/static/main.css"/>
 </head>
 <body>
@@ -16,6 +10,7 @@
             <h1>
                 <a href="/">my first Django project</a>
             </h1>
+            <div class="clearfix"></div>
             {% include "breadcrumbs.html" %}
         </header>
         <nav class="nav">
@@ -23,6 +18,10 @@
         </nav>
         <div class="content">
             {% block content %}{% endblock %}
+
+            {% if items and items.paginator.num_pages > 1%}
+                {% include "paginator.html" %}
+            {% endif %}
         </div>
     </div>
 </body>
