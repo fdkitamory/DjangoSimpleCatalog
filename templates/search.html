@@ -1,7 +1,7 @@
 <div class="search_form">
     <form action="/search/" method="get" >
 {#        {% csrf_token %}#}
-        {{ form_search.query }}
+        {{ form_search.q }}
         <input type="submit" value="Search"/>
     </form>
 </div>
