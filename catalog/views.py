@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Create your views here.
 
-from mycatalog.catalog.models import Item, ItemCategory
+from mycatalog.catalog.models import Item
 from mycatalog.catalog.category_utils import cat_childs, cat_menu, get_cat_in_url
 from mycatalog.catalog.pagination import page_pagination
 from mycatalog.catalog.breadcumbs import breadcrumbs
@@ -10,6 +10,7 @@ from pprint import pprint
 from django.http import Http404
 from django.shortcuts import render_to_response
 from django.core.context_processors import csrf
+from django.conf import settings
 
 
 def index(request):
@@ -43,7 +44,6 @@ def categories_page(request, url):
         'item_err': 'Эээ, сорян категория пуста',
         'form_search': SearchForm()
     }
-    context.update(csrf(request))
     return render_to_response('categories.html', context)
 
 
@@ -74,7 +74,6 @@ def search_page(request):
         'item_err': 'Нет результата или указана пустая строка, попробуйте ещё раз',
         'search_query': u'q={}&'.format(request.GET['q'])
     }
-    # context.update(csrf(request))
     return render_to_response('search_page.html', context)
 
 
