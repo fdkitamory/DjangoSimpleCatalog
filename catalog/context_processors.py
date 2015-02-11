@@ -32,7 +32,7 @@ def breadcrumbs_processor(request):
                 links.append(link)
 
         except IndexError:
-                links = []
+            links = []
 
     elif cats[0] == u'search':
         links = [u'Поиск']

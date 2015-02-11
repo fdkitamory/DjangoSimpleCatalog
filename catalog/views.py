@@ -39,7 +39,7 @@ def categories_page(request, url):
         'items': page_pagination(request, items, 12),
         'item_err': 'Эээ, сорян категория пуста'
     }
-    return render_to_response('categories.html', context)
+    return render_to_response('categories.html', context, context_instance=RequestContext(request))
 
 
 def item_page(request, url):
