@@ -17,14 +17,14 @@ def index(request):
     """Главная"""
     items = Item.objects.all()
     context = {
-        'items': page_pagination(request, items, 12),
-        'form_search': SearchForm()
+        'items': page_pagination(request, items, 12)
     }
     return render_to_response('index.html', context, context_instance=RequestContext(request))
 
 
 def categories_page(request, url):
     """Вывод категорий"""
+
     if get_cat_in_url(url)[0] is False:
         raise Http404
     else:
@@ -37,20 +37,17 @@ def categories_page(request, url):
 
     context = {
         'items': page_pagination(request, items, 12),
-        'item_err': 'Эээ, сорян категория пуста',
-        'form_search': SearchForm()
+        'item_err': 'Эээ, сорян категория пуста'
     }
-    return render_to_response('categories.html', context, context_instance=RequestContext(request))
+    return render_to_response('categories.html', context)
 
 
 def item_page(request, url):
     item = url.strip('/').split('/')[-1]
     item = Item.objects.filter(slug=item)[0]
     return render_to_response('item.html', {
-        'links': breadcrumbs(url),
-        'item': item,
-        # 'categories': cat_menu(),
-    })
+        'item': item
+    }, context_instance=RequestContext(request))
 
 
 def search_page(request):
@@ -64,8 +61,6 @@ def search_page(request):
 
     context = {
         'form_search': form_search,
-        'links': ['Поиск'],
-        # 'categories': cat_menu(),
         'items': page_pagination(request, items, 12),
         'item_err': 'Нет результата или указана пустая строка, попробуйте ещё раз',
         'search_query': u'q={}&'.format(request.GET['q'])
