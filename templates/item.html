@@ -6,7 +6,7 @@
     <h2>{{ item.title }}</h2>
     <span>{{ item.category }}</span>
     <div class="item__img">
-        <img src="/static/media/{{ item.image }}" alt=""/>
+        <img src="/static/media/{{ item.image|default:item.category.image }}" alt=""/>
     </div>
 </div>
 
