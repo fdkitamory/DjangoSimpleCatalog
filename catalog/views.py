@@ -2,7 +2,7 @@
 # Create your views here.
 
 from mycatalog.catalog.models import Item
-from mycatalog.catalog.category_utils import cat_childs, cat_menu, get_cat_in_url
+from mycatalog.catalog.category_utils import cat_childs, get_cat_in_url
 from mycatalog.catalog.pagination import page_pagination
 from mycatalog.catalog.breadcumbs import breadcrumbs
 from mycatalog.catalog.search import SearchForm
@@ -10,6 +10,7 @@ from pprint import pprint
 from django.http import Http404
 from django.shortcuts import render_to_response
 from django.core.context_processors import csrf
+from django.template import RequestContext
 
 
 def index(request):
@@ -17,11 +18,9 @@ def index(request):
     items = Item.objects.all()
     context = {
         'items': page_pagination(request, items, 12),
-        'categories': cat_menu(),
         'form_search': SearchForm()
     }
-    context.update(csrf(request))
-    return render_to_response('index.html', context)
+    return render_to_response('index.html', context, context_instance=RequestContext(request))
 
 
 def categories_page(request, url):
@@ -37,13 +36,11 @@ def categories_page(request, url):
             items.extend(cat.item.all())
 
     context = {
-        'links': breadcrumbs(url),
-        'categories': cat_menu(),
         'items': page_pagination(request, items, 12),
         'item_err': 'Эээ, сорян категория пуста',
         'form_search': SearchForm()
     }
-    return render_to_response('categories.html', context)
+    return render_to_response('categories.html', context, context_instance=RequestContext(request))
 
 
 def item_page(request, url):
@@ -52,7 +49,7 @@ def item_page(request, url):
     return render_to_response('item.html', {
         'links': breadcrumbs(url),
         'item': item,
-        'categories': cat_menu(),
+        # 'categories': cat_menu(),
     })
 
 
@@ -68,12 +65,12 @@ def search_page(request):
     context = {
         'form_search': form_search,
         'links': ['Поиск'],
-        'categories': cat_menu(),
+        # 'categories': cat_menu(),
         'items': page_pagination(request, items, 12),
         'item_err': 'Нет результата или указана пустая строка, попробуйте ещё раз',
         'search_query': u'q={}&'.format(request.GET['q'])
     }
-    return render_to_response('search_page.html', context)
+    return render_to_response('search_page.html', context, context_instance=RequestContext(request))
 
 
 
