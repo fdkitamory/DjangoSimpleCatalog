@@ -47,7 +47,7 @@ def categories_page(request, url):
 
 
 def item_page(request, url):
-    item = url.split('/')[-2:1:-1][0]
+    item = url.strip('/').split('/')[-1]
     item = Item.objects.filter(slug=item)[0]
     return render_to_response('item.html', {
         'links': breadcrumbs(url),

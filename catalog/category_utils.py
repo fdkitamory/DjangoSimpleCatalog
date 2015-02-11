@@ -44,9 +44,10 @@ def cat_tree_smooth(cats):
 def get_cat_in_url(url):
     """Получаем обратный список категорий из урла
        Не нравится что БД дергается каждый раз, переписать через построение дерева выше"""
+
     categories = ItemCategory.objects.all()
-    url = url.split('/')
-    url = url[-2::-1]
+    url = url.strip('/').split('/')
+    url = list(reversed(url))
     cats_in_url = []
 
     for slug in url:

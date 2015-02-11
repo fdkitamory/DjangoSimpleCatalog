@@ -3,7 +3,6 @@ from django.db import models
 from django.db.models import signals
 from django.template.defaultfilters import slugify
 from pytils import translit
-from catalog.supprots import stringCodesSum
 from random import randint
 
 
@@ -21,11 +20,8 @@ class ItemCategory(models.Model):
         return u'{}({})'.format(self.name, self.parent)
 
     @staticmethod
-    def pre_save(sender, instance, **kwargs):
-        slug = slugify(translit.translify(u'{}'.format(instance.name)))
-
-        if not Item.objects.filter(slug=slug) or not ItemCategory.objects.filter(slug=slug) or instance.slug is None:
-            slug = u'{}_{}'.format(slug, stringCodesSum(u'{}{}'.format(slug, randint(1, 10000))))
+    def post_save(sender, instance, **kwargs):
+        slug = slugify(translit.translify(u'{}_{}'.format(instance.name, instance.pk)))
 
         if instance.slug != slug:
             instance.slug = slug
@@ -54,15 +50,13 @@ class Item(models.Model):
         return u'{}/{}/'.format(ItemCategory.get_absolute_url(self.category), self.slug)
 
     @staticmethod
-    def pre_save(sender, instance, **kwargs):
-        slug = slugify(translit.translify(u'{}_{}'.format(instance.title, instance.pk)))
-
-        if not Item.objects.filter(slug=slug) or not ItemCategory.objects.filter(slug=slug) or instance.slug is None:
-            slug = u'{}_{}_{}'.format(u'item', slug, stringCodesSum(u'{}{}'.format(slug, randint(1, 1000))))
+    def post_save(sender, instance, **kwargs):
+        slug = slugify(translit.translify(u'item_{}_{}'.format(instance.title, instance.pk)))
 
         if instance.slug != slug:
                 instance.slug = slug
                 instance.save()
 
-signals.pre_save.connect(Item.pre_save, sender=Item)
-signals.pre_save.connect(ItemCategory.pre_save, sender=ItemCategory)
+signals.post_save.connect(Item.post_save, sender=Item)
+
+signals.post_save.connect(ItemCategory.post_save, sender=ItemCategory)
