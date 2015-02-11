@@ -24,16 +24,12 @@ class ItemCategory(models.Model):
     def pre_save(sender, instance, **kwargs):
         slug = slugify(translit.translify(u'{}'.format(instance.name)))
 
-        if ItemCategory.objects.filter(slug=slug) is not None or instance.slug is None:
+        if not Item.objects.filter(slug=slug) or not ItemCategory.objects.filter(slug=slug) or instance.slug is None:
             slug = u'{}_{}'.format(slug, stringCodesSum(u'{}{}'.format(slug, randint(1, 10000))))
 
-            if instance.slug != slug:
-                instance.slug = slug
-                instance.save()
-        else:
-            if instance.slug != slug:
-                instance.slug = slug
-                instance.save()
+        if instance.slug != slug:
+            instance.slug = slug
+            instance.save()
 
     def _get_absolute_url(self):
         return [self.slug] + (self.parent._get_absolute_url() if self.parent else [])
@@ -61,14 +57,10 @@ class Item(models.Model):
     def pre_save(sender, instance, **kwargs):
         slug = slugify(translit.translify(u'{}_{}'.format(instance.title, instance.pk)))
 
-        if ItemCategory.objects.filter(slug=slug) is not None or instance.slug is None:
+        if not Item.objects.filter(slug=slug) or not ItemCategory.objects.filter(slug=slug) or instance.slug is None:
             slug = u'{}_{}_{}'.format(u'item', slug, stringCodesSum(u'{}{}'.format(slug, randint(1, 1000))))
 
-            if instance.slug != slug:
-                instance.slug = slug
-                instance.save()
-        else:
-            if instance.slug != slug:
+        if instance.slug != slug:
                 instance.slug = slug
                 instance.save()
 
