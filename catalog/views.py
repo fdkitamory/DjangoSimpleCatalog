@@ -9,7 +9,6 @@ from mycatalog.catalog.search import SearchForm
 from pprint import pprint
 from django.http import Http404
 from django.shortcuts import render_to_response
-from django.core.context_processors import csrf
 from django.template import RequestContext
 
 
@@ -52,18 +51,19 @@ def item_page(request, url):
 
 def search_page(request):
     items = []
-    if request.method == 'GET':
-        form_search = SearchForm(request.GET)
+    if request.method == 'POST':
+        form_search = SearchForm(request.POST)
         if form_search.is_valid():
-            items = Item.objects.filter(title__contains=request.GET['q'])
+            print(request.POST['q'])
+            items = Item.objects.filter(title__contains=request.POST['q'])
+            print(items)
     else:
         form_search = SearchForm()
 
     context = {
         'form_search': form_search,
         'items': page_pagination(request, items, 12),
-        'item_err': 'Нет результата или указана пустая строка, попробуйте ещё раз',
-        'search_query': u'q={}&'.format(request.GET['q'])
+        'item_err': 'Нет результата или указана пустая строка, попробуйте ещё раз'
     }
     return render_to_response('search_page.html', context, context_instance=RequestContext(request))
 

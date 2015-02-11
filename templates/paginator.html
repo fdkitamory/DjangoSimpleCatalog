@@ -1,15 +1,15 @@
 <div class="pagination">
     <span class="step-links">
         {% if items.has_previous %}
-            <a href="?{{ search_query }}page={{ items.previous_page_number }}"><< Предыдущая</a>
+            <a href="?page={{ items.previous_page_number }}"><< Предыдущая</a>
         {% endif %}
 
         <span class="current">
-            {{ items.number }} из {{ items.paginator.num_pages }}.
+            {{ items.number }} из {{ items.paginator.num_pages }}
         </span>
 
         {% if items.has_next %}
-            <a href="?{{ search_query }}page={{ items.next_page_number }}">Следующая >></a>
+            <a href="?page={{ items.next_page_number }}">Следующая >></a>
         {% endif %}
     </span>
 </div>
