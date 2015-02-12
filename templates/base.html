@@ -3,20 +3,25 @@
 <head>
     <title>my first Django project</title>
     <link rel="stylesheet" href="/static/main.css"/>
-{#    <script src="/static/jquery.js"></script>#}
-</head>
+    <script src="/static/jquery.js"></script>
+</head>s
 <body>
     <div class="wrapper clearfix">
         <header class="header">
             <h1>
                 <a href="/">my first Django project</a>
             </h1>
+{#            <div class="search_form">#}
+{#                <form action="/search/" method="post" >#}
+{#                    {% csrf_token %}#}
+{#                    <input type="text" name="q" id="search_text" maxlength="100" value="{{ query }}"/>#}
+{#                    <input type="submit" value="Search" id="search_button"/>#}
+{#                </form>#}
+{#            </div>#}
             <div class="search_form">
-                <form action="/search/" method="post" >
-                    {% csrf_token %}
-                    <input type="text" name="q" id="search_text" maxlength="100" value="{{ query }}"/>
-                    <input type="submit" value="Search" id="search_button"/>
-                </form>
+                {% csrf_token %}
+                <input type="text" name="q" id="search_text" maxlength="100"/>
+                <input type="submit" value="Search" id="search_button"/>
             </div>
             <div class="clearfix"></div>
             {% include "breadcrumbs.html" %}
@@ -32,6 +37,6 @@
             {% endif %}
         </div>
     </div>
-{#    <script src="/static/script.js"></script>#}
+    <script src="/static/script.js"></script>
 </body>
 </html>

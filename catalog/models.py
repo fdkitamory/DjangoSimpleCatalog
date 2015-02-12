@@ -3,7 +3,6 @@ from django.db import models
 from django.db.models import signals
 from django.template.defaultfilters import slugify
 from pytils import translit
-from random import randint
 
 
 class ItemCategory(models.Model):
@@ -57,6 +56,6 @@ class Item(models.Model):
                 instance.slug = slug
                 instance.save()
 
-signals.post_save.connect(Item.post_save, sender=Item)
 
+signals.post_save.connect(Item.post_save, sender=Item)
 signals.post_save.connect(ItemCategory.post_save, sender=ItemCategory)
