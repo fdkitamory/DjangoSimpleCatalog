@@ -5,22 +5,25 @@
 document.addEventListener( "DOMContentLoaded", function(){
 
     function get_search_results(){
-        $.post(
-            "/search_ajax/",
-            {
-                'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').value,
-                'q': $('#search_text').val()
+
+        $.ajax({
+            url: '/search_ajax',
+            type: 'POST',
+            data: {
+                csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').value,
+                q: $('#search_text').val()
             },
-            onAjaxSuccess
-        );
+            dataType: 'html',
+            context: $this,
+            success: function(response) {
 
-        function onAjaxSuccess(data) {
-          // Здесь мы получаем данные, отправленные сервером и выводим их на экран.
-          console.log(data)
-        }
-
-        console.log()
-        console.log()
+            },
+            error: function(xhr, error, status) {
+                alert(error);
+                $this.find('img.loading').remove();
+                $this.find('.dt').show();
+            }
+        })
     }
 
     $('#search_button').click(function (){
