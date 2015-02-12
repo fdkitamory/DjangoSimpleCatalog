@@ -1,0 +1,14 @@
+{% if items %}
+    {% for item in items.object_list %}
+        <li class="prod_list__item">
+            <a class="prod_list__link" href="{{ item.get_absolute_url }}">
+                <h2>{{ item.title }}</h2>
+                <div class="prod_lis__img">
+                    <img src="/static/media/{{ item.image|default:item.category.image }}" alt="{{ item.category }}"/>
+                </div>
+            </a>
+        </li>
+    {% endfor %}
+{% else %}
+    {{ item_err }}
+{% endif %}
