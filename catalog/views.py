@@ -54,7 +54,8 @@ def search_page(request):
     items = []
     if request.method == 'POST':
         query = request.POST['q']
-        items = Item.objects.filter(title__contains=query)
+        if query.isalnum():
+            items = Item.objects.filter(title__contains=query)
     else:
         query = u''
 
