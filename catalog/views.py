@@ -53,17 +53,16 @@ def item_page(request, url):
 def search_page(request):
     items = []
     if request.method == 'POST':
-        form_search = SearchForm(request.POST)
-        if form_search.is_valid():
-            items = Item.objects.filter(title__contains=request.POST['q'])
+        query = request.POST['q']
+        items = Item.objects.filter(title__contains=query)
     else:
-        form_search = SearchForm()
+        query = u''
 
     pprint(request.POST)
 
     context = {
         'links': [u'Поиск'],
-        'form_search': form_search,
+        'query': query,
         'items': page_pagination(request, items, 12),
         'item_err': 'Нет результата или указана пустая строка, попробуйте ещё раз'
     }
