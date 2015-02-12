@@ -70,27 +70,6 @@ def search_page(request):
 
 
 
-#
-# def search_ajax(request):
-#     items = []
-#     if request.method == 'POST':
-#         form_search = SearchForm(request.POST)
-#         if form_search.is_valid():
-#             items = Item.objects.filter(title__contains=request.POST['q'])
-#     else:
-#         form_search = SearchForm()
-#
-#     context = {
-#         'item_err': 'Нет результата или указана пустая строка, попробуйте ещё раз',
-#         'items': items
-#     }
-#     return render(request, 'search_ajax.html', context, content_type="application/xhtml+xml")
-
-
-
-
-
-
 
 
 
