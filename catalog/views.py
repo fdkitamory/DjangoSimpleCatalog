@@ -9,9 +9,6 @@ from pprint import pprint
 from django.http import Http404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-import re
-
-from django.shortcuts import render
 
 
 def index(request):
@@ -63,7 +60,7 @@ def search_page(request):
         'items': page_pagination(request, items, 12),
         'item_err': 'Нет результата или указана пустая строка, попробуйте ещё раз'
     }
-    return render_to_response('search_page.html', context, context_instance=RequestContext(request))
+    return render_to_response('categories.html', context, context_instance=RequestContext(request))
 
 
 
