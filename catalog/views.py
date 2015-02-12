@@ -52,14 +52,10 @@ def item_page(request, url):
 
 def search_page(request):
     items = []
-    if request.method == 'POST':
-        query = request.POST['q']
-        if query.isalnum():
-            items = Item.objects.filter(title__contains=query)
-    else:
-        query = u''
-
-    pprint(request.POST)
+    query = u''
+    if request.POST.get('q'):
+        query = request.POST.get('q')
+        items = Item.objects.filter(title__icontains=query)
 
     context = {
         'links': [u'Поиск'],
