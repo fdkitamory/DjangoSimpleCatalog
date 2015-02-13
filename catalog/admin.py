@@ -1,6 +1,6 @@
 __author__ = 'frank'
 
-from catalog.models import *
+from catalog.models import ItemCategory, Item
 from django.contrib import admin
 
 

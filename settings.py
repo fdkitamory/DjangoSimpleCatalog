@@ -160,10 +160,11 @@ LOGGING = {
 }
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-    'mycatalog.catalog.context_processors.menu_processor',
     'django.core.context_processors.auth',
     'django.core.context_processors.csrf',
-    # 'django.core.context_processors.debusg',
+    'django.core.context_processors.static',
+    'django.core.context_processors.media',
     # 'django.core.context_processors.i18n',
     # 'django.core.context_processors.media',
+    'mycatalog.catalog.context_processors.menu_processor',
 )

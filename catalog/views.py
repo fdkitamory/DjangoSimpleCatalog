@@ -5,7 +5,7 @@ from mycatalog.catalog.models import Item
 from mycatalog.catalog.category_utils import cat_childs, get_cat_in_url
 from mycatalog.catalog.pagination import page_pagination
 from mycatalog.catalog.breadcumbs import breadcrumbs
-# from pprint import pprint
+from pprint import pprint
 from django.http import Http404, HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext, Context, loader
@@ -33,10 +33,11 @@ def categories_page(request, url):
         for cat in cats:
             items.extend(cat.item.all())
 
+    pprint(request)
     context = {
         'links': breadcrumbs(request),
         'items': page_pagination(request, items, 12),
-        'item_err': 'Эээ, сорян категория пуста'
+        'item_err': u'Эээ, сорян категория пуста'
     }
     return render_to_response('categories.html', context, context_instance=RequestContext(request))
 
@@ -58,7 +59,7 @@ def search_page(request):
         'links': [u'Поиск'],
         'query': query,
         'items': page_pagination(request, items, 12),
-        'item_err': 'Нет результата или указана пустая строка, попробуйте ещё раз'
+        'item_err': u'Нет результата или указана пустая строка, попробуйте ещё раз'
     }
     return render_to_response('categories.html', context, context_instance=RequestContext(request))
 
@@ -69,10 +70,11 @@ def search_ajax(request):
         items = Item.objects.filter(title__icontains=request.POST.get('q'))
 
     context = {
-        'item_err': 'Нет результата или указана пустая строка, попробуйте ещё раз',
+        'item_err': u'Нет результата или указана пустая строка, попробуйте ещё раз',
         'items': items
     }
-    context = Context(context)
+    # extra_context =
+    context = RequestContext(request, context)
     template = loader.get_template('search_ajax.html')
-    respons = template.render(context)
-    return HttpResponse(respons)
+    response = template.render(context)
+    return HttpResponse(response)
