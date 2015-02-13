@@ -1,5 +1,5 @@
 {% if items %}
-    {% for item in items.object_list %}
+    {% for item in items %}
         <li class="prod_list__item">
             <a class="prod_list__link" href="{{ item.get_absolute_url }}">
                 <h2>{{ item.title }}</h2>

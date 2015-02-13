@@ -7,21 +7,17 @@ document.addEventListener( "DOMContentLoaded", function(){
     function get_search_results(){
 
         $.ajax({
-            url: '/search_ajax',
+            url: '/search_ajax/',
             type: 'POST',
             data: {
-                csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').value,
+                csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
                 q: $('#search_text').val()
             },
             dataType: 'html',
-            context: $this,
             success: function(response) {
-
-            },
-            error: function(xhr, error, status) {
-                alert(error);
-                $this.find('img.loading').remove();
-                $this.find('.dt').show();
+                $('.prod_list__item').remove();
+                $('.pagination').remove();
+                $('.prod_list').append(response);
             }
         })
     }

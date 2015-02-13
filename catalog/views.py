@@ -6,9 +6,9 @@ from mycatalog.catalog.category_utils import cat_childs, get_cat_in_url
 from mycatalog.catalog.pagination import page_pagination
 from mycatalog.catalog.breadcumbs import breadcrumbs
 # from pprint import pprint
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.template import RequestContext, Context, loader
 
 
 def index(request):
@@ -72,4 +72,7 @@ def search_ajax(request):
         'item_err': 'Нет результата или указана пустая строка, попробуйте ещё раз',
         'items': items
     }
-    return render(request, 'search_ajax.html', context, content_type="application/xhtml+xml")
+    context = Context(context)
+    template = loader.get_template('search_ajax.html')
+    respons = template.render(context)
+    return HttpResponse(respons)
