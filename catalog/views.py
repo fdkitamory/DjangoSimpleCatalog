@@ -33,7 +33,6 @@ def categories_page(request, url):
         for cat in cats:
             items.extend(cat.item.all())
 
-    pprint(request)
     context = {
         'links': breadcrumbs(request),
         'items': page_pagination(request, items, 12),
@@ -73,7 +72,6 @@ def search_ajax(request):
         'item_err': u'Нет результата или указана пустая строка, попробуйте ещё раз',
         'items': items
     }
-    # extra_context =
     context = RequestContext(request, context)
     template = loader.get_template('search_ajax.html')
     response = template.render(context)
